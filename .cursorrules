@@ -11,8 +11,9 @@ Get the actual date from the command: python -c "import datetime; print(datetime
 
 ## Database
 You will analyze Azure Cost data. To get the data you will make a query using the sql_df.py function, passing the query as an argument.
-The maximum limit of result lines for each query is 50 lines, remember that.
+The maximum limit of result lines for each query is 10 lines, remember that.
 The base table for all queries is "df".
+To run the script, you need the "--query" argument.
 
 ## Questions
 Always bring cost details for every question that you will answer.
