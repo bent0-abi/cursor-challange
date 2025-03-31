@@ -11,3 +11,5 @@ __pycache__/
 .env
 *.csv
 *.log
+*.ipynb
+test.py
