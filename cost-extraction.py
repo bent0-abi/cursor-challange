@@ -193,6 +193,29 @@ def save_results_to_file(data: list, filename: str):
     df.to_csv(filename, sep=',', index=False)
     logger.info(f"Done!! check the {filename} file")
 
+def save_results_to_files(data: list, filename: str):
+    logger.info(f"Saving results...")
+    folder = 'costs'
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    df = pd.DataFrame(data)
+    # Create a different file for each 15k rows
+    if len(df) > 15000:
+        # Split the dataframe into chunks of 15k rows
+        chunk_size = 15000
+        chunks = [df[i:i + chunk_size] for i in range(0, len(df), chunk_size)]
+        
+        # Save each chunk to a separate file
+        for i, chunk in enumerate(chunks):
+            chunk_filename = f'{folder}/{filename.split(".")[0]}_{i+1}.csv'
+            chunk.to_csv(chunk_filename, sep=',', index=False)
+            logger.info(f"Saved chunk {i+1} to {chunk_filename}")
+    else:
+        # Save as a single file if less than 15k rows
+        df.to_csv(f'{folder}/{filename}', sep=',', index=False)
+        
+    logger.info(f"Done!! check the {folder} directory for results")
+
 def main(scope: str = '', tenant_id: str = '', mg: str = '', months_back: int = 4, granularity_type: str = 'daily'):
     """
     Main function to collect cost data and detect anomalies.
@@ -215,7 +238,7 @@ def main(scope: str = '', tenant_id: str = '', mg: str = '', months_back: int = 
                                     granularity_level=_granularity_level,
                                     granularity_type=granularity_type,
                                     months_back=months_back)
-    save_results_to_file(costs_list, filename)
+    save_results_to_files(costs_list, filename)
 
 if __name__ == "__main__":
     # load the environment variables
