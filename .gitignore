@@ -1,0 +1,13 @@
+# Default python gitignore
+__pycache__/
+.venv/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+
+# Files
+.env
+*.csv
+*.log
