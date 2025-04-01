@@ -79,6 +79,7 @@ def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description='Execute SQL queries on Azure cost data')
     parser.add_argument('--query', type=str, required=True, help='SQL query to execute')
+    parser.add_argument('--output', type=str, required=False, help='Output file name')
     args = parser.parse_args()
     
     # Load the data
@@ -97,6 +98,10 @@ def main():
     if result is not None:
         print("\nQuery Results:")
         print(result)
+    
+    if args.output:
+        result.to_csv(args.output, index=False)
+        print(f"Results saved to {args.output}")
         
 if __name__ == "__main__":
     main()

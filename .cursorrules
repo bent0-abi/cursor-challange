@@ -16,6 +16,8 @@ The base table for all queries is "df".
 To run the script, you need the "--query" argument.
 Don't try to access the CSV file directly, every interaction with the data needs to be done using the sql_df file.
 To search for column names, you can use this command: python sql_df.py --query "SELECT * FROM df LIMIT 5" | cat
+Always use the DATE() function when you handle dates in the WHERE clause.
+You can use this parameters in the query: https://docs.python.org/3/library/sqlite3.html
 
 ## Questions
 Always bring cost details for every question that you will answer.
@@ -23,3 +25,15 @@ Always bring cost details for every question that you will answer.
     - Q: What is my biggest service?
     - A: your biggest service is X and cost Y in this month and a average of W in the available period.
 If a question not define the scope (for example anomalies grouped by subscription), group the data by service and subscriptions.
+
+## Anomaly Detection
+Always consider these points when answering questions about anomaly detection, cost increase or decrease:
+- Consider efficient anomaly detection techniques, not only the average.
+- Take into account the historical cost pattern of the last 4 months.
+- Bring only variations greater than 5% and 50EUR.
+- Don't forget to include the values of these increases and the expected values. 
+- When anomalies are found, save to a csv file, you can pass the arg --output to the sql_df.py file.
+    - The filename needs to be like this: anomalies_%Y_%,_%d.csv and save it in the "anomalies" folder.
+- When it is an order for a group of days (3 days for example), do not consider the average of that group (average cost of the 3 days). ALWAYS consider each day individually.
+- Show the anomalies and some insights.
+- Execute the plot_anomalies.py to create graphs using the  function, remember to pass the created csv file in the --file parameter.
